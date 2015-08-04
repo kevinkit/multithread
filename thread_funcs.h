@@ -14,10 +14,16 @@ void *simple_add(void *arg) {
     int pos = data->size*data->tid;
     int i = 0;
 
-    for(i = 0; i < data->size; i++)
+
+
+    for(i = 0; i < data->size + data->size_rest; i++)
     {
+        if(data->wanted_size > (data->tid*(data->size + data->size_rest) + i)){
             data->out_mem[i] = data->in_mem1[i] + data->in_mem2[i];
-            printf("POS[%i] = %d + %d = %d\n", i , data->in_mem1[i], data->in_mem2[i], data->out_mem[i]);
+        }
+        else{
+            printf("BREACH!\n");
+        }
     }
     pthread_exit(NULL);
 }
@@ -35,10 +41,14 @@ void *simple_sub(void *arg) {
     int pos = data->size*data->tid;
     int i = 0;
 
-    for(i = 0; i < data->size; i++)
+    for(i = 0; i < data->size + data->size_rest; i++)
     {
+        if(data->wanted_size > (data->tid*(data->size + data->size_rest) + i)){     
             data->out_mem[i] = data->in_mem1[i] - data->in_mem2[i];
-            printf("POS[%i] = %d + %d = %d\n", i , data->in_mem1[i], data->in_mem2[i], data->out_mem[i]);
+        }
+        else{
+            printf("BREACH\n");
+        }
     }
     pthread_exit(NULL);
 }
@@ -59,10 +69,17 @@ void *simple_mul(void *arg) {
     int pos = data->size*data->tid;
     int i = 0;
 
-    for(i = 0; i < data->size; i++)
+    for(i = 0; i < data->size + data->size_rest; i++)
     {
+
+
+        if(data->wanted_size > (data->tid*(data->size + data->size_rest) + i)){
             data->out_mem[i] = data->in_mem1[i] * data->in_mem2[i];
-            printf("POS[%i] = %d + %d = %d\n", i , data->in_mem1[i], data->in_mem2[i], data->out_mem[i]);
+            printf("POS[%i] = %d * %d = %d\n", i , data->in_mem1[i], data->in_mem2[i], data->out_mem[i]);
+        }
+        else{
+            printf("BREACH\n");
+        }
     }
     pthread_exit(NULL);
 }
